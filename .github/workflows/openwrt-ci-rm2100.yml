@@ -44,6 +44,7 @@ jobs:
       - name: Generate configuration file
         run: |
           cp ./diffconfig/diffconfig/RM2100.config .config
+          cat ./diffconfig/diffconfig/ssrplus.config >> .config
 
       - name: Build the firmware image
         run: |

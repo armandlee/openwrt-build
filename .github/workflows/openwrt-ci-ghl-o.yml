@@ -54,6 +54,7 @@ jobs:
       - name: Generate configuration file
         run: |
           cp ./diffconfig/diffconfig/GHLo.config .config
+          cat ./diffconfig/diffconfig/ssrplus.config >> .config
 
       - name: Build the firmware image
         run: |

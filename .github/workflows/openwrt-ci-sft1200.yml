@@ -94,7 +94,7 @@ jobs:
 
       - name: Generate configuration file
         run: |
-          cat ./diffconfig/diffconfig/SFT1200.config >> ./openwrt-18.06/siflower/openwrt-18.06/.config
+          cat ./diffconfig/diffconfig/ssrplus.config >> ./openwrt-18.06/siflower/openwrt-18.06/.config
 
       - name: Compile firmware
         run: |
