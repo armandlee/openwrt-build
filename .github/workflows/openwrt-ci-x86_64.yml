@@ -48,9 +48,7 @@ jobs:
 
       - name: Compile firmware
         run: |
-          make defconfig
-          make download -j8
-          make V=s -j1
+          make -j $(($(nproc)+1)) defconfig download clean world
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
