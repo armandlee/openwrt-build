@@ -99,7 +99,8 @@ jobs:
       - name: Compile firmware
         working-directory: ./openwrt-18.06/siflower/openwrt-18.06/
         run: |
-          make -j $(($(nproc)+1)) defconfig download clean world
+          make defconfig
+          make -j5
 
 
       - name: Upload artifact
