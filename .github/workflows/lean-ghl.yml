@@ -1,0 +1,59 @@
+#
+# This is free software, lisence use MIT.
+# 
+# Copyright (C) 2019 P3TERX <https://p3terx.com>
+# Copyright (C) 2019 KFERMercer <KFER.Mercer@gmail.com>
+# 
+# <https://github.com/KFERMercer/OpenWrt-CI>
+# 
+
+name: Lean-CI-GHL
+
+on:
+  # push:
+  #   branches: 
+  #     - master
+  schedule:
+    - cron: 0 20 * * *
+  # release:
+  #   types: [published]
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Lean repo
+        uses: actions/checkout@v4
+        with:
+          repository: coolsnowwolf/lede
+
+      - name: Checkout diffconfig repo
+        uses: actions/checkout@v4
+        with:
+          path: diffconfig
+
+      - name: Update feeds
+        run: |
+          sed -i '$a src-git helloworld https://github.com/fw876/helloworld' ./feeds.conf.default
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+      - name: Generate configuration file
+        run: |
+          cp ./diffconfig/config/GHL.config .config
+          cat ./diffconfig/config/zerotier.config >> .config
+          cat ./diffconfig/config/ssrplus.config >> .config
+
+      - name: Build the firmware image
+        run: |
+          make -j $(($(nproc)+1)) defconfig download clean world
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Lean firmware GHL
+          path: ./bin/
