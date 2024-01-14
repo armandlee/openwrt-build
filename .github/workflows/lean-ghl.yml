@@ -44,7 +44,7 @@ jobs:
 
       - name: Generate configuration file
         run: |
-          cp ./diffconfig/config/GHL.config .config
+          cp ./diffconfig/config/ghl.config .config
           cat ./diffconfig/config/zerotier.config >> .config
           cat ./diffconfig/config/ssrplus.config >> .config
 
