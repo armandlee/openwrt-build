@@ -45,6 +45,7 @@ jobs:
       - name: Generate configuration file
         run: |
           cp ./diffconfig/config/rm2100.config .config
+          cat ./diffconfig/config/utils.config >> .config
           cat ./diffconfig/config/zerotier.config >> .config
           cat ./diffconfig/config/ssrplus.config >> .config
 
