@@ -60,7 +60,7 @@ jobs:
 
       - name: Update the feeds
         run: |
-          sed -i '$a src-git helloworld https://github.com/fw876/helloworld;main' ./feeds.conf.default
+          sed -i '$a src-git helloworld https://github.com/fw876/helloworld' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
