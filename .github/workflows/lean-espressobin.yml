@@ -1,17 +1,17 @@
 #
 # This is free software, lisence use MIT.
-# 
+#
 # Copyright (C) 2019 P3TERX <https://p3terx.com>
 # Copyright (C) 2019 KFERMercer <KFER.Mercer@gmail.com>
-# 
+#
 # <https://github.com/KFERMercer/OpenWrt-CI>
-# 
+#
 
 name: Lean-CI-Espressobin
 
 on:
   # push:
-  #   branches: 
+  #   branches:
   #     - master
   schedule:
     - cron: 0 20 * * *
@@ -20,9 +20,7 @@ on:
   workflow_dispatch:
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -49,7 +47,6 @@ jobs:
             /usr/share/dotnet \
             /usr/share/swift
           df -h
-
 
       - name: Install packages
         env:
@@ -103,8 +100,28 @@ jobs:
           make download -j8
           make V=s -j1
 
-      - name: Upload artifact
+      - name: Prepare artifact
+        run: |
+          mkdir -p ./artifact/package
+          mkdir -p ./artifact/buildinfo
+          rm -rf $(find ./bin/targets/ -type d -name "packages")
+          cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
+          cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
+
+      - name: Upload buildinfo
         uses: actions/upload-artifact@v4
         with:
-          name: Lean firmware Espressobin
-          path: ./bin/
+          name: OpenWrt_buildinfo
+          path: ./artifact/buildinfo/
+
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: OpenWrt_package
+          path: ./artifact/package/
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: OpenWrt_firmware
+          path: ./bin/targets/
