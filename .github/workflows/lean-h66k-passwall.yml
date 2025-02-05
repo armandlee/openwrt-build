@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: Lean-CI-H68K-PassWall
+name: Lean-CI-H66K-PassWall
 
 on:
   # push:
@@ -70,7 +70,7 @@ jobs:
 
       - name: Generate configuration file
         run: |
-          cp ./diffconfig/config/h68k.config .config
+          cp ./diffconfig/config/h66k.config .config
           cat ./diffconfig/config/utils.config >> .config
           cat ./diffconfig/config/lean.config >> .config
           cat ./diffconfig/config/zerotier.config >> .config
