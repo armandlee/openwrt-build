@@ -63,8 +63,8 @@ jobs:
 
       - name: Update feeds
         run: |
-          sed -i '$a src-git passwall https://github.com/xiaorouji/openwrt-passwall' ./feeds.conf.default
-          sed -i '$a src-git passwall_packages https://github.com/xiaorouji/openwrt-passwall-packages' ./feeds.conf.default
+          sed -i '$a src-git passwall https://github.com/xiaorouji/openwrt-passwall;main' ./feeds.conf.default
+          sed -i '$a src-git passwall_packages https://github.com/xiaorouji/openwrt-passwall-packages;main' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
