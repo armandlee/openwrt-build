@@ -24,15 +24,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Remove unnecessary directories to free up space
-        run: |
-          sudo rm -rf /usr/local/.ghcup
-          sudo rm -rf /opt/hostedtoolcache/CodeQL
-          sudo rm -rf /usr/local/lib/android/sdk/ndk
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf /usr/local/share/boost
-          sudo -E apt -y purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* snap*
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 512
+          swap-size-mb: 1024
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
+          remove-docker-images: 'true'
 
       - name: Install packages
         env:
@@ -63,8 +64,8 @@ jobs:
 
       - name: Update feeds
         run: |
-          sed -i '$a src-git passwall https://github.com/xiaorouji/openwrt-passwall' ./feeds.conf.default
-          sed -i '$a src-git passwall_packages https://github.com/xiaorouji/openwrt-passwall-packages' ./feeds.conf.default
+          sed -i '1i\src-git passwall_luci https://github.com/xiaorouji/openwrt-passwall.git;main' ./feeds.conf.default
+          sed -i '1i\src-git passwall_packages https://github.com/xiaorouji/openwrt-passwall-packages.git;main' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
