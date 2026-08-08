@@ -76,6 +76,7 @@ jobs:
           cp ./diffconfig/config/espressobin.config .config
           cat ./diffconfig/config/utils.config >> .config
           cat ./diffconfig/config/lean.config >> .config
+          cat ./diffconfig/config/dockerd.config >> .config
           cat ./diffconfig/config/zerotier.config >> .config
           cat ./diffconfig/config/passwall.config >> .config
 
